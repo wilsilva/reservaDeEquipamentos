@@ -1,0 +1,19 @@
+{
+  "name": "williamsilva/reserva-de-equipamentos",
+  "require": {
+    "silex/silex": "^2.0",
+    "twig/twig": "^1.26",
+    "dflydev/doctrine-orm-service-provider": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "authors": [
+    {
+      "name": "William Silva",
+      "email": "williamsilva808@hotmail.com"
+    }
+  ]
+}

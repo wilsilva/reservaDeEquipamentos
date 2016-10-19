@@ -1,0 +1,69 @@
+{% extends "layout_logado.twig" %}
+{% block title %} Alteração Equipamento {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form class="form-horizontal" method="post" action="/home/equipamento/alteracao">
+                <fieldset>
+                    <legend>Alteração de Equipamento</legend>
+                    <div class="form-group">
+                        <label for="numPatrimonio" class="col-lg-2 control-label">Número do Patrimônio</label>
+                        <div class="col-lg-10">
+                            <input type="number" readonly class="form-control" id="numPatrimonio" value="{{ equipamento.numPatrimonio }}" name="numPatrimonio"
+                                   placeholder="Número do Patrimônio" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeEquipamento" class="col-lg-2 control-label">Nome do Equipamento</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="nomeEquipamento" value="{{ equipamento.nome }}" name="nomeEquipamento"
+                                   placeholder="Nome do Equipamento" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoEquipamento" class="col-lg-2 control-label">Tipo de Equipamento</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="tipoEquipamento" name="tipoEquipamento"
+                                   placeholder="Tipo de Equipamento" value="{{ equipamento.tipo }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao" class="col-lg-2 control-label">Descrição</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="descricao" name="descricao"
+                                   placeholder="Descrição" value="{{ equipamento.descricao }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="marca" class="col-lg-2 control-label">Marca</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" value="{{ equipamento.marca }}" id="marca" name="marca" placeholder="Marca"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo" class="col-lg-2 control-label">Modelo</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="modelo" value="{{ equipamento.modelo }}" name="modelo" placeholder="Modelo"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantidadeDisponivel" class="col-lg-2 control-label">Quantidade Disponível</label>
+                        <div class="col-lg-10">
+                            <input type="number" class="form-control" value="{{ equipamento.quantidadeDisponivel }}" id="quantidadeDisponivel"
+                                   name="quantidadeDisponivel" placeholder="Quantidade Disponível" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="reset" class="btn btn-danger">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Alterar</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

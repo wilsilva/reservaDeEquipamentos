@@ -1,0 +1,56 @@
+{% extends "layout_logado.twig" %}
+{% block title %} Cadastro Funcionário {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form class="form-horizontal" method="post" action="/home/funcionario/cadastro">
+                <fieldset>
+                    <legend>Cadastro de Funcionário</legend>
+                    <div class="form-group">
+                        <label for="masp" class="col-lg-2 control-label">MASP</label>
+                        <div class="col-lg-10">
+                            <input type="number" class="form-control" id="masp" name="masp"
+                                   placeholder="MASP" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nome" class="col-lg-2 control-label">Nome Completo</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="nome" name="nome"
+                                   placeholder="Nome Completo" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-lg-2 control-label">E-mail</label>
+                        <div class="col-lg-10">
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="E-mail" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="senha" class="col-lg-2 control-label">Senha</label>
+                        <div class="col-lg-10">
+                            <input type="password" class="form-control" id="senha" name="senha"
+                                   placeholder="Senha" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="select" class="col-lg-2 control-label">Nível de Acesso</label>
+                        <div class="col-lg-10">
+                            <select class="form-control" name="nivelDeAcesso" id="select">
+                                <option value="1">Administrador</option>
+                                <option value="0" selected>Usuário Comum</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="reset" class="btn btn-danger">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

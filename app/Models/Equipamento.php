@@ -10,6 +10,7 @@ namespace App\Models;
 
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\Mapping;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 
@@ -71,12 +72,12 @@ class Equipamento
 
     /**
      * @var Emprestimo
-     * @OneToMany(
+     * @ManyToMany(
      *     targetEntity="Emprestimo",
-     *     mappedBy="Emprestimo"
+     *     mappedBy="equipamentos"
      * )
      */
-    private $emprestimo;
+    private $emprestimos;
 
     /**
      * Equipamento constructor.
@@ -91,6 +92,7 @@ class Equipamento
 
     public function __construct(int $numPatrimonio, string $nome, string $tipo, string $descricao, string $marca, string $modelo, int $quantidadeDisponivel)
     {
+        $this->emprestimos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->numPatrimonio = $numPatrimonio;
         $this->nome = $nome;
         $this->tipo = $tipo;
@@ -215,20 +217,18 @@ class Equipamento
     /**
      * @return mixed
      */
-    public function getEmprestimo()
+    public function getEmprestimos()
     {
-        return $this->emprestimo;
+        return $this->emprestimos;
     }
 
     /**
-     * @param mixed $emprestimo
+     * @param mixed $emprestimos
      */
-    public function setEmprestimo($emprestimo)
+    public function setEmprestimos($emprestimos)
     {
-        $this->emprestimo = $emprestimo;
+        $this->emprestimos = $emprestimos;
     }
-
-
 
 
 }

@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 
@@ -42,36 +44,35 @@ class Emprestimo
     private $quantidadeSolicitada;
 
     /**
-     * @var string
+     * @var \DateTime
      * @Column(
-     *     type="datetime",
+     *     type="date",
      * )
      */
     private $dataEmprestimo;
 
     /**
-     * @var string
+     * @var \DateTime
      * @Column(
-     *     type="datetime",
+     *     type="date",
      * )
      */
     private $dataDevolucao;
 
     /**
-     * @var Equipamento
-     * @ManyToOne(
-     *     targetEntity="Equipamento",
-     *     inversedBy="Emprestimo"
-     * )
-     * @JoinColumn(name="equipamentoId", referencedColumnName="numPatrimonio", nullable=false)
+     * @ManyToMany(targetEntity="Equipamento", inversedBy="emprestimos")
+     * @JoinTable(name="emprestimo_equipamento",
+     *      joinColumns={@JoinColumn(name="emprestimo_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="numPatrimonio", referencedColumnName="numPatrimonio")}
+     *      )
      */
-    private $equipamento;
+    private $equipamentos;
 
     /**
      * @var Funcionario
      * @ManyToOne(
      *     targetEntity="Funcionario",
-     *     inversedBy="Emprestimo"
+     *     inversedBy="emprestimos"
      * )
      * @JoinColumn(name="funcionarioId", referencedColumnName="masp", nullable=false)
      */
@@ -81,7 +82,7 @@ class Emprestimo
      * @var Status
      * @ManyToOne(
      *     targetEntity="Status",
-     *     inversedBy="Emprestimo"
+     *     inversedBy="emprestimo"
      * )
      * @JoinColumn(name="statusId", referencedColumnName="id", nullable=false)
      */
@@ -93,8 +94,9 @@ class Emprestimo
      * @param string $dataEmprestimo
      * @param string $dataDevolucao
      */
-    public function __construct(int $quantidadeSolicitada, string $dataEmprestimo, string $dataDevolucao)
+    public function __construct(int $quantidadeSolicitada, \DateTime $dataEmprestimo, \DateTime $dataDevolucao)
     {
+        $this->equipamentos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->quantidadeSolicitada = $quantidadeSolicitada;
         $this->dataEmprestimo = $dataEmprestimo;
         $this->dataDevolucao = $dataDevolucao;
@@ -133,51 +135,47 @@ class Emprestimo
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getDataEmprestimo(): string
+    public function getDataEmprestimo(): \DateTime
     {
         return $this->dataEmprestimo;
     }
 
     /**
-     * @param string $dataEmprestimo
+     * @param \DateTime $dataEmprestimo
      */
-    public function setDataEmprestimo(string $dataEmprestimo)
+    public function setDataEmprestimo(\DateTime $dataEmprestimo)
     {
         $this->dataEmprestimo = $dataEmprestimo;
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getDataDevolucao(): string
+    public function getDataDevolucao(): \DateTime
     {
         return $this->dataDevolucao;
     }
 
     /**
-     * @param string $dataDevolucao
+     * @param \DateTime $dataDevolucao
      */
-    public function setDataDevolucao(string $dataDevolucao)
+    public function setDataDevolucao(\DateTime $dataDevolucao)
     {
         $this->dataDevolucao = $dataDevolucao;
     }
 
-    /**
-     * @return Equipamento
-     */
-    public function getEquipamento(): Equipamento
+
+    public function getEquipamentos()
     {
-        return $this->equipamento;
+        return $this->equipamentos;
     }
 
-    /**
-     * @param Equipamento $equipamento
-     */
-    public function setEquipamento(Equipamento $equipamento)
+
+    public function addEquipamento(Equipamento $equipamento)
     {
-        $this->equipamento = $equipamento;
+        $this->equipamentos->add($equipamento);
     }
 
     /**

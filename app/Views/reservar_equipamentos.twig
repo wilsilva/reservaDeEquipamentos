@@ -1,0 +1,86 @@
+{% extends "layout_logado.twig" %}
+{% block title %} Cadastro Equipamento {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form class="form-horizontal" method="post" action="/home/reservar">
+                <fieldset>
+                    <legend>Solicitação de Reserva</legend>
+                    <div class="form-group">
+                        <label for="equipamento" class="col-lg-2 control-label">Equipamento</label>
+                        <div class="col-lg-10" style="max-height: 600px; overflow: auto">
+                            {% for equipamento in equipamentos %}
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <input type="checkbox" value="{{ equipamento.numPatrimonio }}" name="equipamentos[]" id="{{ equipamento.numPatrimonio }}">
+                                        <label for="{{ equipamento.numPatrimonio }}" class="panel-title">{{ equipamento.nome }}</label>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Nº de Patrimônio:</label>
+                                            <div class="col-lg-10">
+                                                <label class="control-label">{{ equipamento.numPatrimonio }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Tipo:</label>
+                                            <div class="col-lg-10">
+                                                <label class="control-label">{{ equipamento.tipo }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Descrição:</label>
+                                            <div class="col-lg-10">
+                                                <label class="control-label">{{ equipamento.descricao }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Marca/Modelo:</label>
+                                            <div class="col-lg-10">
+                                                <label class="control-label">{{ equipamento.marca }}/{{ equipamento.modelo }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Qtd Disponível:</label>
+                                            <div class="col-lg-10">
+                                                <label class="control-label">{{ equipamento.quantidadeDisponivel }} itens disponíveis</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataEmprestimo" class="col-lg-2 control-label">Data do Emprestimo</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="dataEmprestimo" name="dataEmprestimo"
+                                   placeholder="dia/mes/ano" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataDevolucao" class="col-lg-2 control-label">Data de Devolução</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="dataDevolucao" name="dataDevolucao"
+                                   placeholder="dia/mes/ano" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantidadeSolicitada" class="col-lg-2 control-label">Quantidade Solicitada</label>
+                        <div class="col-lg-10">
+                            <input type="number" class="form-control" id="quantidadeSolicitada"
+                                   name="quantidadeSolicitada" placeholder="Quantidade Solicitada" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <a href="/home" class="btn btn-danger">Cancelar</a>
+                            <button type="submit" class="btn btn-success">Solicitar Reserva</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

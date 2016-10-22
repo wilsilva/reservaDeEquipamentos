@@ -40,8 +40,34 @@ class Status
      * @var Emprestimo
      * @OneToMany(
      *     targetEntity="Emprestimo",
-     *     mappedBy="Emprestimo"
+     *     mappedBy="status"
      * )
      */
     private $emprestimo;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return Emprestimo
+     */
+    public function getEmprestimo(): Emprestimo
+    {
+        return $this->emprestimo;
+    }
+
+
 }

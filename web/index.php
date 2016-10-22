@@ -66,5 +66,6 @@ include_once __DIR__ . '/../routes/login.php';
 include_once __DIR__ . '/../routes/home.php';
 include_once __DIR__ . '/../routes/equipamentos.php';
 include_once __DIR__ . '/../routes/funcionarios.php';
+include_once __DIR__ . '/../routes/emprestimos.php';
 
 $app->run();

@@ -13,21 +13,23 @@
                             <table class="table table-striped table-hover ">
                                 <thead>
                                 <tr>
-                                    <th>Nº de Patrimônio</th>
-                                    <th>Equipamento</th>
-                                    <th>Marca/Modelo</th>
+                                    <th>Cod. da Reserva</th>
+                                    <th>Data Emprestimo</th>
+                                    <th>Data Devolução</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                          {% for emprestimo in funcionario.emprestimos %}
                                 <tr>
-                                    <td>1</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
+                                    <td>{{ emprestimo.id }}</td>
+                                    <td>{{ emprestimo.dataEmprestimo.format('d/m/Y') }}</td>
+                                    <td>{{ emprestimo.dataDevolucao.format('d/m/Y') }}</td>
+                                    <td>{{ emprestimo.status.status }}</td>
                                     <td><a href="" class="btn btn-danger">Cancelar Reserva</a></td>
                                 </tr>
+                          {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -49,24 +51,29 @@
                             <table class="table table-striped table-hover ">
                                 <thead>
                                 <tr>
-                                    <th>Nº de Patrimônio</th>
-                                    <th>Equipamento</th>
-                                    <th>Marca/Modelo</th>
+                                    <th>Cod. da Reserva</th>
+                                    <th>Funcionário</th>
+                                    <th>Data Emprestimo</th>
+                                    <th>Data Devolução</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>
-                                        <a href="" class="btn btn-info" data-toggle="modal" data-target="#alterarStatus">Alterar
-                                            Status</a>
-                                    </td>
-                                </tr>
+                                {% for emprestimo in emprestimos %}
+                                    <tr>
+                                        <td>{{ emprestimo.id }}</td>
+                                        <td>{{ emprestimo.funcionario.nome }}</td>
+                                        <td>{{ emprestimo.dataEmprestimo.format('d/m/Y') }}</td>
+                                        <td>{{ emprestimo.dataDevolucao.format('d/m/Y') }}</td>
+                                        <td>{{ emprestimo.status.status }}</td>
+                                        <td>
+                                            <a href="" class="btn btn-info" data-toggle="modal"
+                                               data-target="#alterarStatus">Alterar
+                                                Status</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

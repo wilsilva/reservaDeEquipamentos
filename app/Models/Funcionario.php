@@ -10,6 +10,7 @@ namespace App\Models;
 
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\ORM\Mapping;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Funcionario
@@ -45,13 +46,13 @@ class Funcionario
     private $nivelDeAcesso;
 
     /**
-     * @var Emprestimo
+     *
      * @OneToMany(
      *     targetEntity="Emprestimo",
-     *     mappedBy="Emprestimo"
+     *     mappedBy="funcionario"
      * )
      */
-    private $emprestimo;
+    private $emprestimos;
 
 
     /**
@@ -63,6 +64,7 @@ class Funcionario
      */
     public function __construct(string $nome, int $masp, string $email, string $senha, int $nivelDeAcesso = 0)
     {
+        $this->emprestimos = new ArrayCollection();
         $this->nome = $nome;
         $this->masp = $masp;
         $this->email = $email;
@@ -150,21 +152,15 @@ class Funcionario
         $this->nivelDeAcesso = $nivelDeAcesso;
     }
 
-    /**
-     * @return Emprestimo
-     */
-    public function getEmprestimo() : Emprestimo
+
+    public function getEmprestimos()
     {
-        return $this->emprestimo;
+        return $this->emprestimos;
     }
 
-    /**
-     * @param Emprestimo $emprestimo
-     */
-    public function setEmprestimo(Emprestimo $emprestimo)
+    public function addEmprestimo(Emprestimo $emprestimo)
     {
-        $this->emprestimo = $emprestimo;
+        $this->emprestimos->add($emprestimo);
     }
-
 
 }

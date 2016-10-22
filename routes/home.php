@@ -6,10 +6,17 @@
  * Time: 5:38 PM
  */
 
+use App\Helpers\Auth;
+use App\Resources\EmprestimoResource;
+
 $app->get('/home', function () use ($app) {
 
+    $emprestimoResource = new EmprestimoResource();
+    $emprestimos = $emprestimoResource->retornarListaEquipamentos();
+    
     return $app['twig']->render('home.twig', [
-        'funcionario' => \App\Helpers\Auth::getFuncionarioLogado(),
+        'funcionario' => Auth::getFuncionarioLogado(),
+        'emprestimos' => $emprestimos
     ]);
 
 })->before($validarLogin);

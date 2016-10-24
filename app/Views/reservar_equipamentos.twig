@@ -9,59 +9,67 @@
                     <div class="form-group">
                         <label for="equipamento" class="col-lg-2 control-label">Equipamento</label>
                         <div class="col-lg-10" style="max-height: 600px; overflow: auto">
-                            {% for equipamento in equipamentos %}
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <input type="checkbox" value="{{ equipamento.numPatrimonio }}" name="equipamentos[]" id="{{ equipamento.numPatrimonio }}">
-                                        <label for="{{ equipamento.numPatrimonio }}" class="panel-title">{{ equipamento.nome }}</label>
+                            {% if equipamentos|length > 0 %}
+                                {% for equipamento in equipamentos %}
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <input type="checkbox" value="{{ equipamento.numPatrimonio }}"
+                                                   name="equipamentos[]" id="{{ equipamento.numPatrimonio }}">
+                                            <label for="{{ equipamento.numPatrimonio }}"
+                                                   class="panel-title">{{ equipamento.nome }}</label>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Nº de Patrimônio:</label>
+                                                <div class="col-lg-10">
+                                                    <label class="control-label">{{ equipamento.numPatrimonio }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Tipo:</label>
+                                                <div class="col-lg-10">
+                                                    <label class="control-label">{{ equipamento.tipo }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Descrição:</label>
+                                                <div class="col-lg-10">
+                                                    <label class="control-label">{{ equipamento.descricao }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Marca/Modelo:</label>
+                                                <div class="col-lg-10">
+                                                    <label class="control-label">{{ equipamento.marca }}
+                                                        /{{ equipamento.modelo }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Qtd Disponível:</label>
+                                                <div class="col-lg-10">
+                                                    <label class="control-label">{{ equipamento.quantidadeDisponivel }}
+                                                        itens disponíveis</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="panel-body">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 control-label">Nº de Patrimônio:</label>
-                                            <div class="col-lg-10">
-                                                <label class="control-label">{{ equipamento.numPatrimonio }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-lg-2 control-label">Tipo:</label>
-                                            <div class="col-lg-10">
-                                                <label class="control-label">{{ equipamento.tipo }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-lg-2 control-label">Descrição:</label>
-                                            <div class="col-lg-10">
-                                                <label class="control-label">{{ equipamento.descricao }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-lg-2 control-label">Marca/Modelo:</label>
-                                            <div class="col-lg-10">
-                                                <label class="control-label">{{ equipamento.marca }}/{{ equipamento.modelo }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-lg-2 control-label">Qtd Disponível:</label>
-                                            <div class="col-lg-10">
-                                                <label class="control-label">{{ equipamento.quantidadeDisponivel }} itens disponíveis</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                                <p>Nenhum equipamento disponível</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="dataEmprestimo" class="col-lg-2 control-label">Data do Emprestimo</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="dataEmprestimo" name="dataEmprestimo"
+                            <input type="text" class="form-control data-tipo" id="dataEmprestimo" name="dataEmprestimo"
                                    placeholder="dia/mes/ano" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="dataDevolucao" class="col-lg-2 control-label">Data de Devolução</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="dataDevolucao" name="dataDevolucao"
+                            <input type="text" class="form-control data-tipo" id="dataDevolucao" name="dataDevolucao"
                                    placeholder="dia/mes/ano" required>
                         </div>
                     </div>

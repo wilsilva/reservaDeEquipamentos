@@ -14,8 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 $app->get('/home/reservar', function () use ($app) {
 
-    $equipamentoResource = new \App\Resources\EquipamentoResource();
-    $equipamentos = $equipamentoResource->retornarListaEquipamentos();
+    try {
+        $equipamentoResource = new \App\Resources\EquipamentoResource();
+        $equipamentos = $equipamentoResource->retornarListaEquipamentosNaoReservados();
+    } catch (\Exception $exception) {
+        die($exception->getMessage());
+    }
 
     return $app['twig']->render('reservar_equipamentos.twig', [
         'funcionario' => \App\Helpers\Auth::getFuncionarioLogado(),
@@ -41,7 +45,10 @@ $app->post('/home/reservar', function (Request $request) use ($app) {
 
         $emprestimo->setFuncionario(Auth::getFuncionarioLogado());
 
-        $equipamentosIds = $request->get('equipamentos');
+        if (!empty($request->get('equipamentos')) || count($request->get('equipamentos')) > 0)
+            $equipamentosIds = $request->get('equipamentos');
+        else
+            throw new \Exception("Favor selecionar um equipamento");
 
         foreach ($equipamentosIds as $equipamentoId) {
             $equipamentoResource = new \App\Resources\EquipamentoResource();
@@ -58,4 +65,21 @@ $app->post('/home/reservar', function (Request $request) use ($app) {
 
     $message->makeText('Reserva solicitada com sucesso!', Message::Success)->show();
     return $app->redirect('/home');
+})->before($validarLogin);
+
+
+$app->get('/home/reserva/cancelar/{id}', function ($id) use ($app) {
+
+    $message = new Message($app);
+
+    try {
+        $emprestimoResource = new \App\Resources\EmprestimoResource();
+        $emprestimoResource->cancelarEmprestimo($emprestimoResource->getEmprestimoById($id));
+
+        $message->makeText('Cancelamento foi efetuado com sucesso!', Message::Success)->show();
+    } catch (\Exception $erro) {
+        $message->makeText("Ocorreu um erro ao cancelar o emprestimo! \n Erro: {$erro->getMessage()}", Message::Error)->show();
+    }
+    return $app->redirect('/home');
+
 })->before($validarLogin);

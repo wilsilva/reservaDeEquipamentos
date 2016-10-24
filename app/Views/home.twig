@@ -21,15 +21,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                          {% for emprestimo in funcionario.emprestimos %}
-                                <tr>
-                                    <td>{{ emprestimo.id }}</td>
-                                    <td>{{ emprestimo.dataEmprestimo.format('d/m/Y') }}</td>
-                                    <td>{{ emprestimo.dataDevolucao.format('d/m/Y') }}</td>
-                                    <td>{{ emprestimo.status.status }}</td>
-                                    <td><a href="" class="btn btn-danger">Cancelar Reserva</a></td>
-                                </tr>
-                          {% endfor %}
+                                {% for emprestimo in funcionario.emprestimos %}
+                                    <tr {% if emprestimo.status.id == 4 %} class="danger" {% elseif emprestimo.status.id == 2 %} class="success" {% elseif emprestimo.status.id == 1 %} class="warning" {% endif %}>
+                                        <td>{{ emprestimo.id }}</td>
+                                        <td>{{ emprestimo.dataEmprestimo.format('d/m/Y') }}</td>
+                                        <td>{{ emprestimo.dataDevolucao.format('d/m/Y') }}</td>
+                                        <td>{{ emprestimo.status.status }}</td>
+                                        <td>
+                                            {% if emprestimo.status.id == 1 %}
+                                                <a href="/home/reserva/cancelar/{{ emprestimo.id }}"
+                                                   onclick="javascript: if(confirm('Você realmente deseja cancelar a reserva ?') == false) return false"
+                                                   class="btn btn-danger">Cancelar Reserva</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -61,16 +67,17 @@
                                 </thead>
                                 <tbody>
                                 {% for emprestimo in emprestimos %}
-                                    <tr>
+                                    <tr {% if emprestimo.status.id == 4 %} class="danger" {% elseif emprestimo.status.id == 2 %} class="success" {% elseif emprestimo.status.id == 1 %} class="warning" {% endif %}>
                                         <td>{{ emprestimo.id }}</td>
                                         <td>{{ emprestimo.funcionario.nome }}</td>
                                         <td>{{ emprestimo.dataEmprestimo.format('d/m/Y') }}</td>
                                         <td>{{ emprestimo.dataDevolucao.format('d/m/Y') }}</td>
                                         <td>{{ emprestimo.status.status }}</td>
                                         <td>
-                                            <a href="" class="btn btn-info" data-toggle="modal"
-                                               data-target="#alterarStatus">Alterar
-                                                Status</a>
+                                            {% if emprestimo.status.id == 1 or emprestimo.status.id == 2 %}
+                                                <a href="" class="btn btn-primary">Alterar
+                                                    Status</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -81,24 +88,5 @@
                 </div>
             </div>
         </section>
-
-        <div class="modal fade" id="alterarStatus" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Alterar Status do Equipamento</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body&hellip;</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-success">Salvar</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
     {% endif %}
 {% endblock %}

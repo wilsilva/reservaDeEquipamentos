@@ -36,4 +36,22 @@ class EmprestimoResource extends AbstractResource
             ])->execute();
         }
     }
+
+    public function getEmprestimoById($id) : Emprestimo
+    {
+        return $this->getEntityManager()->getRepository(Emprestimo::class)->find($id);
+    }
+
+    public function cancelarEmprestimo(Emprestimo $emprestimo)
+    {
+        $em = $this->getEntityManager();
+        $statusResource = new StatusResource();
+        $emprestimo->setStatus($statusResource->retornarStatusCancelado());
+        $em->merge($emprestimo);
+        $em->flush();
+
+        $builder = $em->getConnection()->createQueryBuilder();
+        $builder->delete('emprestimo_equipamento')->where("emprestimo_equipamento.emprestimo_id = {$emprestimo->getId()}")
+            ->execute();
+    }
 }

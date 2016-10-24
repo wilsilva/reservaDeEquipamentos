@@ -20,4 +20,9 @@ class StatusResource extends AbstractResource
 
     }
 
+    public function retornarStatusCancelado() : Status
+    {
+        return $this->getEntityManager()->getRepository(Status::class)->find(4);
+    }
+
 }

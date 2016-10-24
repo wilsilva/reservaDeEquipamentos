@@ -82,7 +82,8 @@ class Emprestimo
      * @var Status
      * @ManyToOne(
      *     targetEntity="Status",
-     *     inversedBy="emprestimo"
+     *     inversedBy="emprestimo",
+     *     cascade={"merge","persist","refresh"}
      * )
      * @JoinColumn(name="statusId", referencedColumnName="id", nullable=false)
      */

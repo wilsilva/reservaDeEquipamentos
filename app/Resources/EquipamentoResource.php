@@ -23,6 +23,35 @@ class EquipamentoResource extends AbstractResource
         return $equipamentos;
     }
 
+    public function retornarListaEquipamentosNaoReservados() : array
+    {
+        $em = $this->getEntityManager();
+        $builder = $em->getConnection()->createQueryBuilder();
+        $builder->select('Equipamento.*')
+            ->from('Equipamento')
+            ->where("Equipamento.numPatrimonio NOT IN(SELECT numPatrimonio FROM emprestimo_equipamento)");
+        $sql = $builder->execute();
+        $sql->execute();
+
+        $equipamentos = [];
+
+        while ($result = $sql->fetch(\PDO::FETCH_OBJ)) {
+            $equipamento = new Equipamento(
+                $result->numPatrimonio,
+                $result->nome,
+                $result->tipo,
+                $result->descricao,
+                $result->marca,
+                $result->modelo,
+                $result->quantidadeDisponivel
+            );
+            $equipamentos[] = $equipamento;
+        }
+
+        return $equipamentos;
+
+    }
+
     public function cadastrar(Equipamento $equipamento)
     {
         $em = $this->getEntityManager();

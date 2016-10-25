@@ -1,19 +1,20 @@
 {% extends "layout_logado.twig" %}
-{% block title %} Solicitação de Reserva {% endblock %}
+{% block title %} Alteração de Stats - Emprestimo {% endblock %}
 {% block content %}
     <div class="container">
         <div class="row">
-            <form class="form-horizontal" method="post" action="/home/reservar">
+            <form class="form-horizontal" method="post" action="/home/status/alterar">
                 <fieldset>
-                    <legend>Solicitação de Reserva</legend>
+                    <legend>Alteração de Status - Emprestimo</legend>
                     <div class="form-group">
                         <label for="equipamento" class="col-lg-2 control-label">Equipamento</label>
                         <div class="col-lg-10" style="max-height: 600px; overflow: auto">
-                            {% if equipamentos|length > 0 %}
-                                {% for equipamento in equipamentos %}
-                                    <div class="panel panel-primary">
+                            {% if emprestimo.equipamentos|length > 0 %}
+                                {% for equipamento in emprestimo.equipamentos %}
+                                    <div class="panel panel-success">
                                         <div class="panel-heading">
-                                            <input type="checkbox" value="{{ equipamento.numPatrimonio }}"
+                                            <input checked disabled type="checkbox"
+                                                   value="{{ equipamento.numPatrimonio }}"
                                                    name="equipamentos[]" id="{{ equipamento.numPatrimonio }}">
                                             <label for="{{ equipamento.numPatrimonio }}"
                                                    class="panel-title">{{ equipamento.nome }}</label>
@@ -62,29 +63,47 @@
                     <div class="form-group">
                         <label for="dataEmprestimo" class="col-lg-2 control-label">Data do Emprestimo</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control data-tipo" id="dataEmprestimo" name="dataEmprestimo"
+                            <input type="text" class="form-control data-tipo"
+                                   value="{{ emprestimo.dataEmprestimo.format('d/m/Y') }}" disabled id="dataEmprestimo"
+                                   name="dataEmprestimo"
                                    placeholder="dia/mes/ano" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="dataDevolucao" class="col-lg-2 control-label">Data de Devolução</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control data-tipo" id="dataDevolucao" name="dataDevolucao"
+                            <input type="text" class="form-control data-tipo"
+                                   value="{{ emprestimo.dataDevolucao.format('d/m/Y') }}" disabled id="dataDevolucao"
+                                   name="dataDevolucao"
                                    placeholder="dia/mes/ano" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="quantidadeSolicitada" class="col-lg-2 control-label">Quantidade Solicitada</label>
                         <div class="col-lg-10">
-                            <input type="number" class="form-control" id="quantidadeSolicitada"
+                            <input type="number" disabled value="{{ emprestimo.quantidadeSolicitada }}"
+                                   class="form-control" id="quantidadeSolicitada"
                                    name="quantidadeSolicitada" placeholder="Quantidade Solicitada" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status" class="col-lg-2 control-label">Status do Emprestimo</label>
+                        <div class="col-lg-10">
+                            <input type="hidden" name="idEmprestimo" value="{{ emprestimo.id }}">
+                            <select name="status" id="status" class="form-control">
+                                <option {% if emprestimo.status.id == 1 %} selected {% endif %} value="1" >Aguardando Aprovação</option>
+                                <option {% if emprestimo.status.id == 2 %} selected {% endif %} value="2" >Em emprestimo</option>
+                                <option {% if emprestimo.status.id == 3 %} selected {% endif %} value="3" >Devolvido</option>
+                                <option {% if emprestimo.status.id == 4 %} selected {% endif %} value="4" >Cancelado</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
                             <a href="/home" class="btn btn-danger">Cancelar</a>
-                            <button type="submit" class="btn btn-success">Solicitar Reserva</button>
+                            <button type="submit" class="btn btn-success">Alterar Status do Emprestimo</button>
                         </div>
                     </div>
                 </fieldset>

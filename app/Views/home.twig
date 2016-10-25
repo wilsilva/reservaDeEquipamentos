@@ -75,7 +75,7 @@
                                         <td>{{ emprestimo.status.status }}</td>
                                         <td>
                                             {% if emprestimo.status.id == 1 or emprestimo.status.id == 2 %}
-                                                <a href="" class="btn btn-primary">Alterar
+                                                <a href="/home/status/alterar/{{ emprestimo.id }}" class="btn btn-primary">Alterar
                                                     Status</a>
                                             {% endif %}
                                         </td>

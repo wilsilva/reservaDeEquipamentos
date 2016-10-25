@@ -6,7 +6,7 @@
  * Time: 4:51 PM
  */
 
-namespace app\Resources;
+namespace App\Resources;
 
 
 use App\Models\Status;
@@ -23,6 +23,16 @@ class StatusResource extends AbstractResource
     public function retornarStatusCancelado() : Status
     {
         return $this->getEntityManager()->getRepository(Status::class)->find(4);
+    }
+
+    public function getStatusbyId($idStatus) : Status
+    {
+        return $this->getEntityManager()->getRepository(Status::class)->find($idStatus);
+    }
+
+    public function retornarStatusDevolvido() : Status
+    {
+        return $this->getEntityManager()->getRepository(Status::class)->find(3);
     }
 
 }

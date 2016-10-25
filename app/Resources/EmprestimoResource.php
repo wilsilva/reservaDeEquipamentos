@@ -10,6 +10,7 @@ namespace App\Resources;
 
 
 use App\Models\Emprestimo;
+use App\Models\Status;
 
 class EmprestimoResource extends AbstractResource
 {
@@ -47,6 +48,27 @@ class EmprestimoResource extends AbstractResource
         $em = $this->getEntityManager();
         $statusResource = new StatusResource();
         $emprestimo->setStatus($statusResource->retornarStatusCancelado());
+        $em->merge($emprestimo);
+        $em->flush();
+
+        $builder = $em->getConnection()->createQueryBuilder();
+        $builder->delete('emprestimo_equipamento')->where("emprestimo_equipamento.emprestimo_id = {$emprestimo->getId()}")
+            ->execute();
+    }
+
+    public function modificarStatus(Emprestimo $emprestimo, Status $status)
+    {
+        $em = $this->getEntityManager();
+        $emprestimo->setStatus($status);
+        $em->merge($emprestimo);
+        $em->flush();
+    }
+
+    public function devolvendoEquipamentoEmprestimo(Emprestimo $emprestimo)
+    {
+        $em = $this->getEntityManager();
+        $statusResource = new StatusResource();
+        $emprestimo->setStatus($statusResource->retornarStatusDevolvido());
         $em->merge($emprestimo);
         $em->flush();
 

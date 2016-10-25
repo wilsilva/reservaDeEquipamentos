@@ -10,6 +10,7 @@
 use App\Helpers\Auth;
 use App\Helpers\Message;
 use App\Models\Emprestimo;
+use App\Resources\StatusResource;
 use Symfony\Component\HttpFoundation\Request;
 
 $app->get('/home/reservar', function () use ($app) {
@@ -81,5 +82,41 @@ $app->get('/home/reserva/cancelar/{id}', function ($id) use ($app) {
         $message->makeText("Ocorreu um erro ao cancelar o emprestimo! \n Erro: {$erro->getMessage()}", Message::Error)->show();
     }
     return $app->redirect('/home');
+
+})->before($validarLogin);
+
+$app->get('/home/status/alterar/{id}', function ($id) use ($app) {
+    $emprestimoResource = new \App\Resources\EmprestimoResource();
+    $emprestimo = $emprestimoResource->getEmprestimoById($id);
+
+    return $app['twig']->render('alterar_status_emprestimo.twig', [
+        'funcionario' => \App\Helpers\Auth::getFuncionarioLogado(),
+        'emprestimo' => $emprestimo,
+    ]);
+
+})->before($validarLogin);
+
+
+$app->post('/home/status/alterar', function (Request $request) use ($app) {
+    $idEmprestimo = $request->get('idEmprestimo');
+    $idStatus = $request->get('status');
+
+    $emprestimoResource = new \App\Resources\EmprestimoResource();
+    $emprestimo = $emprestimoResource->getEmprestimoById($idEmprestimo);
+
+    if ($idStatus != 3 && $idStatus != 4) {
+        $statusResource = new StatusResource();
+        $status = $statusResource->getStatusbyId($idStatus);
+        $emprestimoResource->modificarStatus($emprestimo, $status);
+    } elseif ($idStatus == 3) {
+        $emprestimoResource->devolvendoEquipamentoEmprestimo($emprestimo);
+    } elseif ($idStatus == 4) {
+        $emprestimoResource->cancelarEmprestimo($emprestimo);
+    }
+
+    $message = new Message($app);
+    $message->makeText("Status do Emprestimo foi alterado com sucesso!", Message::Success)->show();
+    return $app->redirect('/home');
+
 
 })->before($validarLogin);

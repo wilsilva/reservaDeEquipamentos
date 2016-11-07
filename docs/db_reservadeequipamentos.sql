@@ -27,17 +27,14 @@ DROP TABLE IF EXISTS `Emprestimo`;
 CREATE TABLE `Emprestimo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `quantidadeSolicitada` int(11) NOT NULL,
-  `dataEmprestimo` datetime NOT NULL,
-  `dataDevolucao` datetime NOT NULL,
-  `equipamentoId` int(11) NOT NULL,
+  `dataEmprestimo` date NOT NULL,
+  `dataDevolucao` date NOT NULL,
   `funcionarioId` int(11) NOT NULL,
   `statusId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_A9DC3842B5CAC094` (`equipamentoId`),
   KEY `IDX_A9DC384229000F31` (`funcionarioId`),
   KEY `IDX_A9DC3842F112F078` (`statusId`),
   CONSTRAINT `FK_A9DC384229000F31` FOREIGN KEY (`funcionarioId`) REFERENCES `Funcionario` (`masp`),
-  CONSTRAINT `FK_A9DC3842B5CAC094` FOREIGN KEY (`equipamentoId`) REFERENCES `Equipamento` (`numPatrimonio`),
   CONSTRAINT `FK_A9DC3842F112F078` FOREIGN KEY (`statusId`) REFERENCES `Status` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -76,7 +73,7 @@ CREATE TABLE `Equipamento` (
 
 LOCK TABLES `Equipamento` WRITE;
 /*!40000 ALTER TABLE `Equipamento` DISABLE KEYS */;
-INSERT INTO `Equipamento` VALUES (13255,'Computador Acer','Computador','Computador 2gb ram e 320gb HD','ACER','A54877709-M4',3),(123465789,'Notebook Acer','Notebook','Notebook 1gb ram e 320 gb HD','ACER','A54877709-M4',2);
+INSERT INTO `Equipamento` VALUES (3025101,'Dell  OptiPlex-9020','Computador','Computador 8GB memória RAM, 500GB HD, Placa de Vídeo NVIDIA 1080GTX','DELL','OptiPlex-9020',1);
 /*!40000 ALTER TABLE `Equipamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +100,7 @@ CREATE TABLE `Funcionario` (
 
 LOCK TABLES `Funcionario` WRITE;
 /*!40000 ALTER TABLE `Funcionario` DISABLE KEYS */;
-INSERT INTO `Funcionario` VALUES (12345678,'Administrador do Sistema','administrador@admin.com','12345678',1);
+INSERT INTO `Funcionario` VALUES (12345678,'Administrador do Sistema','admin@admin.com','12345678',1);
 /*!40000 ALTER TABLE `Funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +115,7 @@ CREATE TABLE `Status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,8 +124,34 @@ CREATE TABLE `Status` (
 
 LOCK TABLES `Status` WRITE;
 /*!40000 ALTER TABLE `Status` DISABLE KEYS */;
-INSERT INTO `Status` VALUES (1,'Disponível'),(2,'Indisponível');
 /*!40000 ALTER TABLE `Status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `emprestimo_equipamento`
+--
+
+DROP TABLE IF EXISTS `emprestimo_equipamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `emprestimo_equipamento` (
+  `emprestimo_id` int(11) NOT NULL,
+  `numPatrimonio` int(11) NOT NULL,
+  PRIMARY KEY (`emprestimo_id`,`numPatrimonio`),
+  KEY `IDX_256B3E493EDBF5C6` (`emprestimo_id`),
+  KEY `IDX_256B3E497B4EB046` (`numPatrimonio`),
+  CONSTRAINT `FK_256B3E493EDBF5C6` FOREIGN KEY (`emprestimo_id`) REFERENCES `Emprestimo` (`id`),
+  CONSTRAINT `FK_256B3E497B4EB046` FOREIGN KEY (`numPatrimonio`) REFERENCES `Equipamento` (`numPatrimonio`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `emprestimo_equipamento`
+--
+
+LOCK TABLES `emprestimo_equipamento` WRITE;
+/*!40000 ALTER TABLE `emprestimo_equipamento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `emprestimo_equipamento` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -140,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-19 15:46:58
+-- Dump completed on 2016-11-07  8:25:26

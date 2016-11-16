@@ -36,7 +36,7 @@ CREATE TABLE `Emprestimo` (
   KEY `IDX_A9DC3842F112F078` (`statusId`),
   CONSTRAINT `FK_A9DC384229000F31` FOREIGN KEY (`funcionarioId`) REFERENCES `Funcionario` (`masp`),
   CONSTRAINT `FK_A9DC3842F112F078` FOREIGN KEY (`statusId`) REFERENCES `Status` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `Emprestimo` (
 
 LOCK TABLES `Emprestimo` WRITE;
 /*!40000 ALTER TABLE `Emprestimo` DISABLE KEYS */;
+INSERT INTO `Emprestimo` VALUES (1,1,'2016-11-07','2016-11-20',12345678,3),(2,1,'2016-11-07','2016-11-20',12345678,4);
 /*!40000 ALTER TABLE `Emprestimo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +74,7 @@ CREATE TABLE `Equipamento` (
 
 LOCK TABLES `Equipamento` WRITE;
 /*!40000 ALTER TABLE `Equipamento` DISABLE KEYS */;
-INSERT INTO `Equipamento` VALUES (3025101,'Dell  OptiPlex-9020','Computador','Computador 8GB memória RAM, 500GB HD, Placa de Vídeo NVIDIA 1080GTX','DELL','OptiPlex-9020',1);
+INSERT INTO `Equipamento` VALUES (3025101,'Dell  OptiPlex-9020','Computador','Computador 8GB memória RAM, 500GB HD, Placa de Vídeo NVIDIA 1080GTX','DELL','OptiPlex-9020',1),(125458844,'Notebook HP','Notebook','Notebook 2gb RAM,  320GB HD, Placa de Vídeo Intel HD 3000','HP','2030M45',1);
 /*!40000 ALTER TABLE `Equipamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +101,7 @@ CREATE TABLE `Funcionario` (
 
 LOCK TABLES `Funcionario` WRITE;
 /*!40000 ALTER TABLE `Funcionario` DISABLE KEYS */;
-INSERT INTO `Funcionario` VALUES (12345678,'Administrador do Sistema','admin@admin.com','12345678',1);
+INSERT INTO `Funcionario` VALUES (12345678,'Administrador do Sistema','admin@admin.com','12345678',1),(13874730,'Camila Duarte','camila.duarte@uemg.br','12345678',0);
 /*!40000 ALTER TABLE `Funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +116,7 @@ CREATE TABLE `Status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +125,7 @@ CREATE TABLE `Status` (
 
 LOCK TABLES `Status` WRITE;
 /*!40000 ALTER TABLE `Status` DISABLE KEYS */;
+INSERT INTO `Status` VALUES (1,'Aguardando Aprovação'),(2,'Em Emprestimo'),(3,'Devolvido'),(4,'Cancelado');
 /*!40000 ALTER TABLE `Status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-07  8:25:26
+-- Dump completed on 2016-11-16  8:02:13

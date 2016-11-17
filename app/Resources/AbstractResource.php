@@ -44,10 +44,10 @@ abstract class AbstractResource
         // define credentials...
         $connectionOptions = array(
             'driver' => 'pdo_mysql',
-            'host' => '127.0.0.1',
+            'host' => '192.169.177.80',
             'dbname' => 'db_reservadeequipamentos',
             'user' => 'root',
-            'password' => 'root',
+            'password' => 'Escola100@',
             'charset' => 'utf8',
             'driverOptions' => array(
                 1002 => 'SET NAMES utf8'
